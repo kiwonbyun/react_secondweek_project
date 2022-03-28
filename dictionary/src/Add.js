@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createWord } from "./redux/modules/chineseword";
+import { createWordFB } from "./redux/modules/chineseword";
 const Add = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -14,13 +14,14 @@ const Add = () => {
   console.log(useSelector((state) => state));
   const creatingWord = () => {
     dispatch(
-      createWord(
-        단어.current.value,
-        병음.current.value,
-        의미.current.value,
-        예문.current.value,
-        해석.current.value
-      )
+      createWordFB({
+        단어: 단어.current.value,
+        병음: 병음.current.value,
+        의미: 의미.current.value,
+        예문: 예문.current.value,
+        해석: 해석.current.value,
+        completed: false,
+      })
     );
     history.goBack();
   };

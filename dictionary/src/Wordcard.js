@@ -2,7 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteWord, completeWord } from "./redux/modules/chineseword";
+import {
+  deleteWord,
+  completeWord,
+  completeWordFB,
+  deleteWordFB,
+} from "./redux/modules/chineseword";
 
 const Wordcard = () => {
   const dispatch = useDispatch();
@@ -10,12 +15,14 @@ const Wordcard = () => {
 
   const deletingWord = (event) => {
     const index = event.target.id;
-    dispatch(deleteWord(index));
+
+    dispatch(deleteWordFB(word_list[index].id));
   };
 
   const completingWord = (event) => {
     const index = event.target.id;
-    dispatch(completeWord(index));
+    // console.log(word_list[index].id);
+    dispatch(completeWordFB(word_list[index].id));
   };
 
   return (
