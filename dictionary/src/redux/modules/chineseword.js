@@ -1,22 +1,27 @@
+import { db } from "../../firebase";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
+
 // Actions
+const LOAD = "chineseword/LOAD";
 const CREATE = "chineseword/CREATE";
 const DELETE = "chineseword/DELETE";
 const COMPLETED = "chineseword/COMPLETED";
 const UPDATE = "chineseword/UPDATE";
 const init = {
-  list: [
-    {
-      id: 1,
-      단어: "成功",
-      병음: "chénggōng",
-      의미: "성공, 성공적이다",
-      예문: "获得相当大的成功",
-      해석: "상당히 큰 성공을 거두다",
-      completed: false,
-    },
-  ],
+  list: [{}],
 };
 // Action Creators
+
+export function loadWord(chinese_list) {
+  return { type: LOAD, chinese_list };
+}
 
 export function createWord(단어, 병음, 의미, 예문, 해석) {
   return { type: CREATE, 단어, 병음, 의미, 예문, 해석 };
@@ -31,9 +36,25 @@ export function updateWord(단어, 병음, 의미, 예문, 해석, id) {
   return { type: UPDATE, 단어, 병음, 의미, 예문, 해석, id };
 }
 
+//middlewares
+export const loadWordFB = () => {
+  return async function (dispatch) {
+    const word_data = await getDocs(collection(db, "chinese_word"));
+    let chinese_list = [];
+    word_data.forEach((doc) => {
+      console.log({ id: doc.id, ...doc.data() });
+      chinese_list.push({ id: doc.id, ...doc.data() });
+    });
+    dispatch(loadWord(chinese_list));
+  };
+};
+
 // Reducer
 export default function chineseword(state = init, action = {}) {
   switch (action.type) {
+    case LOAD: {
+      return { list: action.chinese_list };
+    }
     case CREATE: {
       const new_word_list = [
         ...state.list,

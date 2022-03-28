@@ -1,14 +1,28 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import "./reset.css";
+import styled from "styled-components";
 //
 import Home from "./Home";
 import Add from "./Add";
 import Detail from "./Detail";
-
-import styled from "styled-components";
+import "./reset.css";
+import { useSelector, useDispatch } from "react-redux";
+import { db } from "./firebase";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { loadWordFB } from "./redux/modules/chineseword";
 
 function App() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(loadWordFB());
+  }, []);
   return (
     <div
       className="App"
