@@ -33,8 +33,8 @@ export function deleteWord(word_id) {
 export function completeWord(word_id) {
   return { type: COMPLETED, word_id };
 }
-export function updateWord(단어, 병음, 의미, 예문, 해석, id) {
-  return { type: UPDATE, 단어, 병음, 의미, 예문, 해석, id };
+export function updateWord(chinese_word) {
+  return { type: UPDATE, chinese_word };
 }
 
 //middlewares
@@ -71,6 +71,22 @@ export const deleteWordFB = (word_id) => {
     const docRef = doc(db, "chinese_word", word_id);
     await deleteDoc(docRef);
     dispatch(deleteWord(word_id));
+  };
+};
+
+export const updateWordFB = (chinese_word) => {
+  return async function (dispatch, getState) {
+    const docRef = doc(db, "chinese_word", chinese_word.id);
+    const _chinese_word = await updateDoc(docRef, {
+      id: chinese_word.id,
+      completed: false,
+      단어: chinese_word.단어,
+      병음: chinese_word.병음,
+      예문: chinese_word.예문,
+      의미: chinese_word.의미,
+      해석: chinese_word.해석,
+    });
+    dispatch(updateWord(chinese_word));
   };
 };
 
@@ -114,17 +130,16 @@ export default function chineseword(state = init, action = {}) {
       return { list: new_word_list };
     }
     case UPDATE: {
-      console.log(state);
       const new_word_list = state.list.map((l, index) => {
-        if (parseInt(action.id) === l.id) {
+        if (action.chinese_word.id === l.id) {
           return {
-            id: action.id,
+            id: action.chinese_word.id,
             completed: false,
-            단어: action.단어,
-            병음: action.병음,
-            예문: action.예문,
-            의미: action.의미,
-            해석: action.해석,
+            단어: action.chinese_word.단어,
+            병음: action.chinese_word.병음,
+            예문: action.chinese_word.예문,
+            의미: action.chinese_word.의미,
+            해석: action.chinese_word.해석,
           };
         } else {
           return l;
