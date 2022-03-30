@@ -2,7 +2,6 @@ import { db } from "../../firebase";
 import {
   collection,
   doc,
-  getDoc,
   getDocs,
   addDoc,
   deleteDoc,
@@ -16,6 +15,7 @@ const DELETE = "chineseword/DELETE";
 const COMPLETED = "chineseword/COMPLETED";
 const UPDATE = "chineseword/UPDATE";
 const init = {
+  is_loaded: false,
   list: [{}],
 };
 // Action Creators
@@ -77,7 +77,7 @@ export const deleteWordFB = (word_id) => {
 export const updateWordFB = (chinese_word) => {
   return async function (dispatch, getState) {
     const docRef = doc(db, "chinese_word", chinese_word.id);
-    const _chinese_word = await updateDoc(docRef, {
+    await updateDoc(docRef, {
       id: chinese_word.id,
       completed: false,
       단어: chinese_word.단어,
@@ -94,7 +94,7 @@ export const updateWordFB = (chinese_word) => {
 export default function chineseword(state = init, action = {}) {
   switch (action.type) {
     case LOAD: {
-      return { list: action.chinese_list };
+      return { list: action.chinese_list, is_loaded: true };
     }
     case CREATE: {
       const new_word_list = [
@@ -109,15 +109,14 @@ export default function chineseword(state = init, action = {}) {
           해석: action.chinese_word.해석,
         },
       ];
-      console.log(new_word_list);
 
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
     }
     case DELETE: {
       const new_word_list = state.list.filter((l, index) => {
         return action.word_id !== l.id;
       });
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
     }
     case COMPLETED: {
       const new_word_list = state.list.map((l, idx) => {
@@ -127,7 +126,7 @@ export default function chineseword(state = init, action = {}) {
           return l;
         }
       });
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
     }
     case UPDATE: {
       const new_word_list = state.list.map((l, index) => {
@@ -145,7 +144,7 @@ export default function chineseword(state = init, action = {}) {
           return l;
         }
       });
-      return { list: new_word_list };
+      return { ...state, list: new_word_list };
     }
     default:
       return state;

@@ -11,8 +11,15 @@ const Add = () => {
   const 의미 = React.useRef("");
   const 예문 = React.useRef("");
   const 해석 = React.useRef("");
-  console.log(useSelector((state) => state));
   const creatingWord = () => {
+    if (
+      단어.current.value === "" ||
+      병음.current.value === "" ||
+      의미.current.value === ""
+    ) {
+      alert("단어,병음,의미는 필수 입력란입니다.");
+      return;
+    }
     dispatch(
       createWordFB({
         단어: 단어.current.value,
@@ -32,15 +39,15 @@ const Add = () => {
       </div>
       <Inputgroup>
         <span>단어</span>
-        <input type="text" ref={단어}></input>
+        <input type="text" ref={단어} maxLength="15" required></input>
         <span>병음</span>
-        <input type="text" ref={병음}></input>
+        <input type="text" ref={병음} maxLength="15" required></input>
         <span>의미</span>
-        <input type="text" ref={의미}></input>
+        <input type="text" ref={의미} maxLength="15" required></input>
         <span>예문</span>
-        <input type="text" ref={예문}></input>
+        <input type="text" ref={예문} maxLength="35"></input>
         <span>해석</span>
-        <input type="text" ref={해석}></input>
+        <input type="text" ref={해석} maxLength="35"></input>
       </Inputgroup>
       <Btngroup>
         <button onClick={creatingWord}>저장하기</button>
@@ -62,8 +69,8 @@ const Btngroup = styled.div`
   display: flex;
   justify-content: space-between;
   button {
-    background-color: green;
-    color: white;
+    background-color: #82ccdd;
+    color: black;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -91,7 +98,7 @@ const Inputgroup = styled.div`
     font-size: 20px;
     background-color: inherit;
     border: none;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid blue;
     width: 400px;
     margin: 10px 0px;
     &:focus {

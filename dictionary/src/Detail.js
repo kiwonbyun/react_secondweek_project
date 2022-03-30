@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateWord, updateWordFB } from "./redux/modules/chineseword";
+import { updateWordFB } from "./redux/modules/chineseword";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -40,30 +40,35 @@ const Detail = () => {
       <Inputgroup>
         <span>단어</span>
         <input
+          maxLength="15"
           type="text"
           defaultValue={clickedWord ? clickedWord.단어 : ""}
           ref={단어}
         ></input>
         <span>병음</span>
         <input
+          maxLength="15"
           type="text"
           defaultValue={clickedWord ? clickedWord.병음 : ""}
           ref={병음}
         ></input>
         <span>의미</span>
         <input
+          maxLength="15"
           type="text"
           defaultValue={clickedWord ? clickedWord.의미 : ""}
           ref={의미}
         ></input>
         <span>예문</span>
         <input
+          maxLength="35"
           type="text"
           defaultValue={clickedWord ? clickedWord.예문 : ""}
           ref={예문}
         ></input>
         <span>해석</span>
         <input
+          maxLength="35"
           type="text"
           defaultValue={clickedWord ? clickedWord.해석 : ""}
           ref={해석}
@@ -88,8 +93,8 @@ const Btngroup = styled.div`
   display: flex;
   justify-content: space-between;
   button {
-    background-color: green;
-    color: white;
+    background-color: #82ccdd;
+    color: black;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -107,7 +112,7 @@ const Inputgroup = styled.div`
     font-size: 20px;
     background-color: inherit;
     border: none;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid blue;
     width: 400px;
     margin: 10px 0px;
     &:focus {

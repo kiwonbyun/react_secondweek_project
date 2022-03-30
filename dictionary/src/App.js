@@ -6,20 +6,14 @@ import Home from "./Home";
 import Add from "./Add";
 import Detail from "./Detail";
 import "./reset.css";
-import { useSelector, useDispatch } from "react-redux";
-import { db } from "./firebase";
-import {
-  collection,
-  getDoc,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+
 import { loadWordFB } from "./redux/modules/chineseword";
+import Spinner from "./Spinner";
 
 function App() {
   const dispatch = useDispatch();
+  const is_loaded = useSelector((state) => state.chineseword.is_loaded);
   React.useEffect(() => {
     dispatch(loadWordFB());
   }, []);
@@ -42,6 +36,7 @@ function App() {
           <Route path="/" exact>
             <Home />
           </Route>
+          {is_loaded ? null : <Spinner />}
         </>
       </Switch>
     </div>
@@ -49,9 +44,9 @@ function App() {
 }
 
 const Header = styled.header`
-  border-bottom: 1px solid green;
+  border-bottom: 1px solid skyblue;
   margin-bottom: 20px;
-  background-color: green;
+  background-color: #82ccdd;
   h1 {
     font-size: 30px;
     text-align: center;
