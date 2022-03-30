@@ -61,14 +61,14 @@ const Detail = () => {
         ></input>
         <span>예문</span>
         <input
-          maxLength="35"
+          maxLength="25"
           type="text"
           defaultValue={clickedWord ? clickedWord.예문 : ""}
           ref={예문}
         ></input>
         <span>해석</span>
         <input
-          maxLength="35"
+          maxLength="25"
           type="text"
           defaultValue={clickedWord ? clickedWord.해석 : ""}
           ref={해석}

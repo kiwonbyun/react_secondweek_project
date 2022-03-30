@@ -45,9 +45,9 @@ const Add = () => {
         <span>의미</span>
         <input type="text" ref={의미} maxLength="15" required></input>
         <span>예문</span>
-        <input type="text" ref={예문} maxLength="35"></input>
+        <input type="text" ref={예문} maxLength="25"></input>
         <span>해석</span>
-        <input type="text" ref={해석} maxLength="35"></input>
+        <input type="text" ref={해석} maxLength="25"></input>
       </Inputgroup>
       <Btngroup>
         <button onClick={creatingWord}>저장하기</button>

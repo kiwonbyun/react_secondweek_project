@@ -11,14 +11,11 @@ const Wordcard = () => {
   const dispatch = useDispatch();
   const word_list = useSelector((state) => state.chineseword.list);
 
-  const deletingWord = (event) => {
-    const index = event.target.id;
-
+  const deletingWord = (index) => {
     dispatch(deleteWordFB(word_list[index].id));
   };
 
-  const completingWord = (event) => {
-    const index = event.target.id;
+  const completingWord = (index) => {
     dispatch(completeWordFB(word_list[index].id));
   };
 
@@ -39,16 +36,16 @@ const Wordcard = () => {
               </span>
             </Words>
             <Buttons>
-              <button onClick={completingWord}>
-                <CheckRoundedIcon id={index} />
+              <button onClick={() => completingWord(index)}>
+                <CheckRoundedIcon />
               </button>
               <Link to={`/detail/${index}`}>
                 <button>
                   <EditRoundedIcon />
                 </button>
               </Link>
-              <button onClick={deletingWord}>
-                <DeleteForeverRoundedIcon id={index} />
+              <button onClick={() => deletingWord(index)}>
+                <DeleteForeverRoundedIcon />
               </button>
             </Buttons>
           </Wrap>
